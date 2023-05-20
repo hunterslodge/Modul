@@ -16,9 +16,13 @@ using DotNetNuke.Entities.Content;
 using System;
 using System.Web.Caching;
 
-namespace Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Models
+//namespace Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Models
+//{
+//    [TableName("HuntersLodge.Dnn.HelloWorld_Items")]
+
+    namespace Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Models
 {
-    [TableName("HuntersLodge.Dnn.HelloWorld_Items")]
+    [TableName("HelloWorld_Items")]
     //setup the primary key for table
     [PrimaryKey("ItemId", AutoIncrement = true)]
     //configure caching using PetaPoco
