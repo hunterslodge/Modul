@@ -4,11 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using DotNetNuke.Framework;
+using DotNetNuke.Framework.JavaScriptLibraries;
+using DotNetNuke.Web.Mvc.Framework.ActionFilters;
+using DotNetNuke.Web.Mvc.Framework.Controllers;
+
 namespace Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Controllers
 {
-    public class TarsasController : Controller
+    [DnnHandleError]
+    public class TarsasController : DnnController
     {
         // GET: Tarsas
+        [HttpGet]
         public ActionResult Index()
         {
             return View();

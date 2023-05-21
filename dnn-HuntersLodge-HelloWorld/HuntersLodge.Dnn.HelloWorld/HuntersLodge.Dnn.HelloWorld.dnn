@@ -52,7 +52,7 @@
                 <moduleControls>
                   <moduleControl>
                     <controlKey />
-                    <controlSrc>Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Controllers/Item/Index.mvc</controlSrc>
+                    <controlSrc>Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Controllers/Tarsas/Index.mvc</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
                     <controlTitle />
                     <controlType>View</controlType>
