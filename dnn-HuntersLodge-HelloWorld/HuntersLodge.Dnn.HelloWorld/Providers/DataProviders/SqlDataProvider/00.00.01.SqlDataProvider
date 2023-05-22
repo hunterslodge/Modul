@@ -8,18 +8,27 @@
 /*****                                                  *****/
 /************************************************************/
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}HelloWorld_Items]') AND type in (N'U'))
-DROP TABLE {databaseOwner}[{objectQualifier}HelloWorld_Items]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}{objectQualifier}Kódok') AND type in (N'U'))
+DROP TABLE {databaseOwner}{objectQualifier}Kódok
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}{objectQualifier}Foglalások') AND type in (N'U'))
+DROP TABLE {databaseOwner}{objectQualifier}Foglalások
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Vadászattípusok]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Vadászattípusok]
+GO
+
 
 CREATE TABLE {databaseOwner}{objectQualifier}Vadászattípusok (
     ID int PRIMARY KEY IDENTITY,
     Név varchar(50),
-    Leírás varchar(100),
+    Leírás varchar(400),
     Hossz int,
     Nehézség varchar(20),
     Ár int
-);
+) ON [PRIMARY]
+GO
+
 
 CREATE TABLE {databaseOwner}{objectQualifier}Foglalások (
     ID int PRIMARY KEY IDENTITY,
@@ -29,24 +38,51 @@ CREATE TABLE {databaseOwner}{objectQualifier}Foglalások (
     Lemondták_e bit,
     Minimális_létszám int,
     Maximális_létszám int,
-    Aktuális_létszám int,
-    FOREIGN KEY (Típus) REFERENCES Vadászattípusok(ID)
-);
+    Aktuális_létszám int
+) ON [PRIMARY]
+GO
 
-CREATE TABLE {databaseOwner}{objectQualifier}Generált_kódok (
+ALTER TABLE {databaseOwner}{objectQualifier}Foglalások WITH NOCHECK ADD CONSTRAINT [FK_Foglalások_Vadászattípusok] FOREIGN KEY ([Típus])
+    REFERENCES {databaseOwner}{objectQualifier}Vadászattípusok ([ID])
+    ON DELETE NO ACTION
+GO
+
+
+CREATE TABLE {databaseOwner}{objectQualifier}Kódok (
     ID int PRIMARY KEY IDENTITY,
     Kód varchar(10) NOT NULL UNIQUE,
-    Kapcsolódó_vadászat int,
+    KapcsolódóVadászat int,
     Lejárt_e bit,
+	Létrehozás datetime,
     Beváltás bit,
     Típus int NOT NULL,
-    Létrehozó int NOT NULL,
-    Létszám int,
-    FOREIGN KEY (Kapcsolódó_vadászat) REFERENCES Foglalások(ID),
-    FOREIGN KEY (Típus) REFERENCES Vadászattípusok(ID),
-    FOREIGN KEY (Létrehozó) REFERENCES [User](UserID)
-);
+    Létszám int
+) ON [PRIMARY]
+GO
 
+ALTER TABLE {databaseOwner}{objectQualifier}Kódok WITH NOCHECK ADD CONSTRAINT [FK_Kódok_Foglalások] FOREIGN KEY ([KapcsolódóVadászat])
+    REFERENCES {databaseOwner}{objectQualifier}Foglalások ([ID])
+    ON DELETE NO ACTION
+GO
+
+ALTER TABLE {databaseOwner}{objectQualifier}Kódok WITH NOCHECK ADD CONSTRAINT [FK_Kódok_Vadászattípusok] FOREIGN KEY ([Típus])
+    REFERENCES {databaseOwner}{objectQualifier}Vadászattípusok ([ID])
+    ON DELETE NO ACTION
+GO
+
+INSERT INTO Vadászattípusok (Név, Leírás, Hossz, Nehézség, Ár)
+VALUES ('Hortobágyi puszta', 'Hortobágy térségének bejárása gépjárművel, lehetőség van kisebb és közepes termetű vadak elejtésére. Túra gyalogos hossza közelítőleg 8km.', 4, 'Könnyű', 52500),
+('Északi vándorlás', 'Bükk és/vagy Mátra hegység bejárása gyalogosan, a kezdő- és végpont megközelítéséhez gépjármű biztosított. Lehetőség van kisebb és közepes termetű vadak elejtésére.  Túra gyalogos hossza közelítőleg 25km.', 12, 'Középhaladó', 47500),
+('Bakony mélyén', 'A Bakonyban, mesés környezetben Magyarország legtermetesebb vadjaival körbevéve. A túra nagy részét gyalog tesszük meg, de több pihenőpontot jelöltünk ki. A megközelítés gyalog történik előre meghatározott parkolóból, hiszen egyébként túrázók elől elzárt területen vezet a túraút. Lehetőség van közepes és nagy termetű vadak elejtésére.  Túra gyalogos hossza közelítőleg 25km.', 14, 'Nehéz', 98500);
+GO
+
+INSERT INTO Foglalások (Típus, Időpont, Létrehozás, Lemondták_e, Minimális_létszám, Maximális_létszám, Aktuális_létszám)
+VALUES (1, '2023-05-30 10:00:00', '2023-05-20 15:30:00', 0, 5, 10, 7);
+GO
+
+INSERT INTO Kódok (Kód, KapcsolódóVadászat, Lejárt_e, Létrehozás, Beváltás, Típus, Létszám)
+VALUES ('ABC123', 1, 0, '2023-05-20 15:30:00', 0, 1, 7);
+GO
 
 /************************************************************/
 /*****              SqlDataProvider                     *****/
