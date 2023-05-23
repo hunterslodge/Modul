@@ -49,23 +49,23 @@
 
 <div class="tarsasContainer">
     <h2 id="tarsasCim">Társas vadászat jelentkezés</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Jelentkezés</th>
-                <th>Vadászat típus</th>
-                <th>Időpont</th>
-                <th>Férőhelyek</th>
+    <table class="modulTable">
+        <thead class="modulThead">
+            <tr class="modulTr">
+                <th class="modulTh">Jelentkezés</th>
+                <th class="modulTh">Vadászat típus</th>
+                <th class="modulTh">Időpont</th>
+                <th class="modulTh">Férőhelyek</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var túra in túrák)
             {
-                <tr>
-                    <td><input type="radio" name="túrák" value="@túra["id"]" class="radio"></td>
-                    <td>@túra["type"]</td>
-                    <td>@túra["időpont"]</td>
-                    <td>@túra["aktuálisLétszám"] / @túra["maxLétszám"]</td>
+                <tr class="modulTr">
+                    <td class="modulTd"><input type="radio" name="túrák" value="@túra["id"]" class="radio"></td>
+                    <td class="modulTd">@túra["type"]</td>
+                    <td class="modulTd">@túra["időpont"]</td>
+                    <td class="modulTd">@túra["aktuálisLétszám"] / @túra["maxLétszám"]</td>
                 </tr>
             }
         </tbody>
@@ -80,7 +80,7 @@
     }*@
         </tbody>
         </table>
-<button class="gomb-class" onclick="window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0', '_blank')">
+<button class="gomb-class" onclick="window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0')">
     Jelentkezem
 </button>
         </div>
