@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Components;
+using Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Models;
+using DotNetNuke.Data;
 using DotNetNuke.Framework;
 using DotNetNuke.Framework.JavaScriptLibraries;
 using DotNetNuke.Web.Mvc.Framework.ActionFilters;
@@ -18,7 +21,11 @@ namespace Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var dataAccess = new FoglalásokManager();
+            var databaseData = dataAccess.GetFoglalások();
+
+
+            return View(databaseData);
         }
 
         // GET: Tarsas/Details/5

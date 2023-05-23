@@ -1,11 +1,54 @@
 ﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage
 
+@*@using Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Models;
+    @using Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Components;
+    @using Dnn.HuntersLodge.HuntersLodge.Dnn.HelloWorld.Views.Tarsas;*@
+
 @{
     ViewBag.Title = "Tarsas";
+    List<Dictionary<string, object>> túrák = new List<Dictionary<string, object>>();
+
+    Dictionary<string, object> data1 = new Dictionary<string, object>();
+    data1["id"] = 1;
+    data1["type"] = "Bakony mélyén";
+    data1["időpont"] = "2023.06.25";
+    data1["minLétszám"] = 5;
+    data1["aktuálisLétszám"] = 8;
+    data1["maxLétszám"] = 10;
+    túrák.Add(data1);
+
+    Dictionary<string, object> data2 = new Dictionary<string, object>();
+    data2["id"] = 1;
+    data2["type"] = "Bakony mélyén";
+    data2["időpont"] = "2023.06.28";
+    data2["minLétszám"] = 5;
+    data2["aktuálisLétszám"] = 2;
+    data2["maxLétszám"] = 10;
+    túrák.Add(data2);
+
+    Dictionary<string, object> data3 = new Dictionary<string, object>();
+    data3["id"] = 1;
+    data3["type"] = "Hortobágyi puszta";
+    data3["időpont"] = "2023.07.02";
+    data3["minLétszám"] = 6;
+    data3["aktuálisLétszám"] = 9;
+    data3["maxLétszám"] = 10;
+    túrák.Add(data3);
+
+    Dictionary<string, object> data4 = new Dictionary<string, object>();
+    data4["id"] = 1;
+    data4["type"] = "Hortobágyi puszta";
+    data4["időpont"] = "2023.07.06";
+    data4["minLétszám"] = 3;
+    data4["aktuálisLétszám"] = 6;
+    data4["maxLétszám"] = 10;
+    túrák.Add(data4);
+
+
 }
 
-<div class="container">
-    <h2>Társas vadászat jelentkezés</h2>
+<div class="tarsasContainer">
+    <h2 id="tarsasCim">Társas vadászat jelentkezés</h2>
     <table>
         <thead>
             <tr>
@@ -16,10 +59,31 @@
             </tr>
         </thead>
         <tbody>
-            
+            @foreach (var túra in túrák)
+            {
+                <tr>
+                    <td><input type="radio" name="túrák" value="@túra["id"]" class="radio"></td>
+                    <td>@túra["type"]</td>
+                    <td>@túra["időpont"]</td>
+                    <td>@túra["aktuálisLétszám"] / @túra["maxLétszám"]</td>
+                </tr>
+            }
         </tbody>
-    </table>
-    <button>Jelentkezem</button>
-</div>
+@*@foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Típus</td>
+            <td>@item.Létrehozás</td>
+            <td>@item.Aktuális_létszám</td>
+            <td>@item.Időpont</td>
+        </tr>
+    }*@
+        </tbody>
+        </table>
+<button class="gomb-class" onclick="window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0', '_blank')">
+    Jelentkezem
+</button>
+        </div>
+
 
 
